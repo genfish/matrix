@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+
+<style type="text/css">
+
+body { background-color: #000300;  }
+
+#content {
+	color		: #65fe65;
+	font-size	: 24px;
+	font-family	: "Matrix Code NFI";
+	height		: 99.2%;
+	left		: 10px;
+	position	: absolute;
+	top			: 0;
+	width		: 99.2%;
+	word-break	: break-all;
+}
+
+#content span {
+	display		: inline-block;
+	filter		: brightness(7%);
+	position	: relative;
+	width		: 16px;
+}
+
+#content .col {
+	display		: inline-block;
+	position	: relative;
+	width		: 16px;
+}
+
+.white {
+	animation-name: changeBrightness;
+	animation-duration: 5s;
+}
+
+@-webkit-keyframes changeBrightness {
+
+	0% { filter: brightness(250%); }
+	100% { filter: brightness(7%); }
+
+}
+
+</style>
+
+</head>
+
+<body>
+	<div id="content"></div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+function getRndInteger(min, max) {
+	return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
+$(function() {
+
+	var elem = document.getElementById("content");
+
+	var characters = 'abcdefghijklmnopkrstuvwxyz1234567890ABCDEFGHIJKLMONPQRSTUVWXYZ';
+
+	var charactersLength = characters.length;
+
+	var result = '';
+
+	for (var i = 0; i < 119; i++) {
+
+		result += '<div class="col">';
+
+		for (var j = 0; j < 37; j++) {
+
+			result += '<span>' + characters.charAt( Math.floor(Math.random() * charactersLength) ) + '</span>';
+
+		}
+
+		result += '</div>';
+
+	}
+
+	elem.innerHTML = result;
+
+	setInterval(function() {
+
+		numCol = getRndInteger(0, 119);
+		col = $('.col')[numCol];
+
+
+		if ( $(col).data('display') == 'on' )
+		{
+			$(col).children().removeClass("white");
+			$(col).data('display', 'off');
+		}
+		else
+		{
+			$(col).data('display', 'on');
+
+			$(col).children().each(function(index, span) {
+
+				setTimeout(function() {
+
+					$(span).addClass("white");
+					$(span).text( characters.charAt( Math.floor(Math.random() * charactersLength) ) );
+
+				}, index * 100);
+
+			});
+		}
+
+	}, 10);
+
+});
+
+</script>
+
+</body>
+</html>
